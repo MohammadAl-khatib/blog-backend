@@ -1,22 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+const registerController = require('./controllers/Register');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/register', (req, res) => {
-  const { username, password } = req.body;
+mongoose.connect(process.env.mongoDB);
 
-  try {
-    const response = {
-      username, password
-    };
-    res.json(response);
-  } catch (e) {
-    console.log('error in registering user', e.message);
-  }
-});
+app.post('/register', registerController);
 
 app.listen(4000, 'localhost', () => {
   console.log('server started successfully');
