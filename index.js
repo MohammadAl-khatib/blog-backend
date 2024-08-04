@@ -9,9 +9,9 @@ require('dotenv').config();
 
 const registerController = require('./controllers/RegisterController');
 const loginController = require('./controllers/LoginController');
-const { createPostController, GetPostController } = require('./controllers/PostController');
-const uploadMiddleware = multer({ dest: 'uploads/' });
+const { createPostController, GetPostController, GetAllPostsController } = require('./controllers/PostController');
 
+const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
 const whitelist = ['http://localhost:3000'];
 
@@ -33,6 +33,7 @@ app.post('/register', registerController);
 app.get('/login', loginController);
 app.post('/post', uploadMiddleware.single('file'), createPostController);
 app.get('/post/:id', GetPostController);
+app.get('/posts', GetAllPostsController);
 
 app.listen(4000, 'localhost', () => {
   console.log('server started successfully');

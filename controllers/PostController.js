@@ -41,7 +41,6 @@ async function createPostController (req, res) {
 async function GetPostController (req, res) {
   try {
     const { id } = req.params;
-    console.log(id);
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
   } catch (error) {
@@ -50,7 +49,18 @@ async function GetPostController (req, res) {
   }
 }
 
+async function GetAllPostsController (req, res) {
+  try {
+    const posts = await Post.find({}).lean();
+    res.json(posts);
+  } catch (error) {
+    console.error('Error in GetAllPostsController', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 module.exports = {
   createPostController,
-  GetPostController
+  GetPostController,
+  GetAllPostsController
 };
