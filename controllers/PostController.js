@@ -6,11 +6,15 @@ const secret = process.env.jwtSecret;
 
 async function createPostController (req, res) {
   try {
-    const { originalname, path } = req.file;
-    const parts = originalname.split('.');
-    const ext = parts[parts.length - 1];
-    const newPath = path + '.' + ext;
-    fs.renameSync(path, newPath);
+    const { originalname, path } = req.file || {};
+
+    let newPath;
+    if (originalname) {
+      const parts = originalname.split('.');
+      const ext = parts[parts.length - 1];
+      newPath = path + '.' + ext;
+      fs.renameSync(path, newPath);
+    }
 
     const { token } = req.cookies;
     jwt.verify(token, secret, {}, async (error, info) => {
@@ -34,4 +38,4 @@ async function createPostController (req, res) {
   }
 }
 
-module.exports = createPostController;
+module.exports = { createPostController };

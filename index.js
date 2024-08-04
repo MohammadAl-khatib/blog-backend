@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const registerController = require('./controllers/RegisterController');
 const loginController = require('./controllers/LoginController');
-const createPostController = require('./controllers/PostController');
+const { createPostController } = require('./controllers/PostController');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const app = express();
