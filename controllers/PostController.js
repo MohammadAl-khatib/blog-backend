@@ -51,7 +51,11 @@ async function GetPostController (req, res) {
 
 async function GetAllPostsController (req, res) {
   try {
-    const posts = await Post.find({}).lean();
+    const posts = await Post.find()
+      .populate('author', ['username'])
+      .sort({ createdAt: -1 })
+      .limit(20).lean();
+
     res.json(posts);
   } catch (error) {
     console.error('Error in GetAllPostsController', error);
