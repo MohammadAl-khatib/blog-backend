@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const multer = require('multer'); // for loading files
+const jwt = require('jsonwebtoken');
 const path = require('path');
 
 require('dotenv').config();
@@ -36,6 +37,21 @@ app.get('/post/:id', GetPostController);
 app.get('/posts', GetAllPostsController);
 app.put('/edit/:id', uploadMiddleware.single('file'), EditPostController);
 app.delete('/delete/:id', DeletePostController);
+
+// Control verifying and setting cookie
+const secret = process.env.jwtSecret;
+
+app.get('/profile', (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.status(200).json(info);
+  });
+});
+
+app.post('/logout', (req, res) => {
+  res.cookie('token', '').json('ok');
+});
 
 app.listen(4000, 'localhost', () => {
   console.log('server started successfully');
