@@ -44,7 +44,7 @@ async function GetPostController (req, res) {
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
   } catch (error) {
-    console.error('Error in createPostController', error);
+    console.error('Error in GetPostController', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
@@ -63,8 +63,54 @@ async function GetAllPostsController (req, res) {
   }
 }
 
+async function EditPostController (req, res) {
+  try {
+    const { originalname, path } = req.file || {};
+    let newPath;
+
+    if (originalname) {
+      const parts = originalname.split('.');
+      const ext = parts[parts.length - 1];
+      newPath = path + '.' + ext;
+      fs.renameSync(path, newPath);
+    }
+
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, async (error, info) => {
+      if (error) {
+        console.error('Error verifying token:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      const { title, summary, content } = req.body;
+      const { id } = req.params;
+
+      const postDoc = await Post.findById(id);
+      const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+      if (!isAuthor) {
+        return res.status(400).json('you are not the author');
+      }
+
+      console.log('KKKKKKKKKKKKKKK', title);
+
+      await Post.findOneAndUpdate({ _id: id }, {
+        title,
+        summary,
+        content,
+        cover: newPath || postDoc.cover
+      });
+
+      res.json(postDoc);
+    });
+  } catch (error) {
+    console.error('Error in EditPostController', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createPostController,
   GetPostController,
-  GetAllPostsController
+  GetAllPostsController,
+  EditPostController
 };

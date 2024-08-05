@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const registerController = require('./controllers/RegisterController');
 const loginController = require('./controllers/LoginController');
-const { createPostController, GetPostController, GetAllPostsController } = require('./controllers/PostController');
+const { createPostController, GetPostController, GetAllPostsController, EditPostController } = require('./controllers/PostController');
 
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
@@ -34,6 +34,7 @@ app.get('/login', loginController);
 app.post('/post', uploadMiddleware.single('file'), createPostController);
 app.get('/post/:id', GetPostController);
 app.get('/posts', GetAllPostsController);
+app.put('/edit/:id', uploadMiddleware.single('file'), EditPostController);
 
 app.listen(4000, 'localhost', () => {
   console.log('server started successfully');
