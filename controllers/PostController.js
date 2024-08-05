@@ -91,8 +91,6 @@ async function EditPostController (req, res) {
         return res.status(400).json('you are not the author');
       }
 
-      console.log('KKKKKKKKKKKKKKK', title);
-
       await Post.findOneAndUpdate({ _id: id }, {
         title,
         summary,
@@ -108,9 +106,21 @@ async function EditPostController (req, res) {
   }
 };
 
+async function DeletePostController (req, res) {
+  try {
+    const { id } = req.params;
+    await Post.findOneAndDelete({ _id: id });
+    res.status(200).json({ message: 'document has been deleted' });
+  } catch (error) {
+    console.error('Error in DeletePostController', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 module.exports = {
   createPostController,
   GetPostController,
   GetAllPostsController,
-  EditPostController
+  EditPostController,
+  DeletePostController
 };
