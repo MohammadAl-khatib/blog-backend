@@ -28,7 +28,7 @@ describe('loginController', () => {
     json: jest.fn(),
   };
 
-  it('should return 400 if username or password is invalid', async () => {
+  it('should return 400 if user is not registered', async () => {
     User.findOne.mockResolvedValue(null);
 
     await loginController(req, res);
