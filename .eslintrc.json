@@ -2,9 +2,10 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "jest/globals": true
     },
-    "extends": "standard",
+    "extends": ["standard", "eslint:recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
@@ -12,7 +13,14 @@
         "semi": [
             "error",
             "always"
-        ],
-        "jest": true
+        ]
+    },
+    "overrides": [
+    {
+      "files": ["test/**"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"],
+      "rules": { "jest/prefer-expect-assertions": "off" }
     }
+  ]
 }

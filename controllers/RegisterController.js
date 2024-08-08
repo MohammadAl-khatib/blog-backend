@@ -2,7 +2,6 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
-
 async function registerController (req, res) {
   const { username, password } = req.body;
 
@@ -25,7 +24,7 @@ async function registerController (req, res) {
     if (e.code === 11000) {
       res.json({
         error: 'Duplicate Key',
-        message: 'Username is already in use. Please choose a different username.',
+        message: 'Username is already in use. Please choose a different username.'
       });
     } else {
       res.status(500).json(e);

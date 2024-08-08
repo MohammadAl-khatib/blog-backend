@@ -25,7 +25,7 @@ describe('loginController', () => {
   const res = {
     status: jest.fn().mockReturnThis(),
     cookie: jest.fn().mockReturnThis(),
-    json: jest.fn(),
+    json: jest.fn()
   };
 
   it('should return 400 if user is not registered', async () => {
@@ -51,7 +51,7 @@ describe('loginController', () => {
     User.findOne.mockResolvedValue({});
     bcrypt.compareSync.mockReturnValue(true);
     jwt.sign.mockImplementation((payload, secret, options, callback) => {
-      callback('mock JWT error');
+      callback(new Error('mock JWT error'));
     });
 
     await loginController(req, res);

@@ -104,7 +104,7 @@ async function EditPostController (req, res) {
     console.error('Error in EditPostController', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
-};
+}
 
 async function DeletePostController (req, res) {
   try {
