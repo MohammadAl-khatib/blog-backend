@@ -8,9 +8,9 @@ const path = require('path');
 
 require('dotenv').config();
 
-const registerController = require('./controllers/RegisterController');
-const loginController = require('./controllers/LoginController');
-const { createPostController, GetPostController, GetAllPostsController, EditPostController, DeletePostController } = require('./controllers/PostController');
+const RegisterController = require('./controllers/RegisterController');
+const LoginController = require('./controllers/LoginController');
+const { CreatePostController, GetPostController, GetAllPostsController, EditPostController, DeletePostController } = require('./controllers/PostController');
 
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
@@ -30,9 +30,9 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 mongoose.connect(process.env.mongoDB);
 
 // Endpoints
-app.post('/register', registerController);
-app.get('/login', loginController);
-app.post('/post', uploadMiddleware.single('file'), createPostController);
+app.post('/register', RegisterController);
+app.get('/login', LoginController);
+app.post('/post', uploadMiddleware.single('file'), CreatePostController);
 app.get('/post/:id', GetPostController);
 app.get('/posts', GetAllPostsController);
 app.put('/edit/:id', uploadMiddleware.single('file'), EditPostController);

@@ -5,7 +5,7 @@ const User = require('../models/User');
 
 const secret = process.env.jwtSecret;
 
-async function loginController (req, res) {
+async function LoginController (req, res) {
   try {
     const { username, password } = req.query;
     const userDoc = await User.findOne({ username });
@@ -31,4 +31,4 @@ async function loginController (req, res) {
   }
 }
 
-module.exports = loginController;
+module.exports = LoginController;

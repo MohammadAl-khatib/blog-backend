@@ -4,7 +4,7 @@ const Post = require('../models/Post.js');
 
 const secret = process.env.jwtSecret;
 
-async function createPostController (req, res) {
+async function CreatePostController (req, res) {
   try {
     const { originalname, path } = req.file || {};
 
@@ -22,6 +22,7 @@ async function createPostController (req, res) {
         console.error('Error verifying token:', error);
         return res.status(500).json({ error: 'Internal server error' });
       }
+
       const { title, summary, content } = req.body;
       const postDoc = await Post.create({
         title,
@@ -30,6 +31,7 @@ async function createPostController (req, res) {
         cover: newPath,
         author: info.id
       });
+
       res.json(postDoc);
     });
   } catch (error) {
@@ -87,18 +89,19 @@ async function EditPostController (req, res) {
 
       const postDoc = await Post.findById(id);
       const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+
       if (!isAuthor) {
         return res.status(400).json('you are not the author');
       }
 
-      await Post.findOneAndUpdate({ _id: id }, {
+      const updatedPost = await Post.findOneAndUpdate({ _id: id }, {
         title,
         summary,
         content,
         cover: newPath || postDoc.cover
       });
 
-      res.json(postDoc);
+      res.json(updatedPost);
     });
   } catch (error) {
     console.error('Error in EditPostController', error);
@@ -118,7 +121,7 @@ async function DeletePostController (req, res) {
 }
 
 module.exports = {
-  createPostController,
+  CreatePostController,
   GetPostController,
   GetAllPostsController,
   EditPostController,
