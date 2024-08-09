@@ -20,7 +20,7 @@ async function LoginController (req, res) {
         console.error('Error generating token:', err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-      res.cookie('token', token, { sameSite: 'None' });
+      res.cookie('token', token, { sameSite: 'None', secure: true });
       res.json({
         id: userDoc._id,
         username
