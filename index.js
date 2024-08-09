@@ -53,7 +53,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  res.cookie('token', '').json('ok');
+  res.cookie('token', '', { sameSite: 'None', secure: true }).json('ok');
 });
 
 const PORT = process.env.PORT || 4000;
