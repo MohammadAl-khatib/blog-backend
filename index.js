@@ -53,6 +53,6 @@ app.post('/logout', (req, res) => {
   res.cookie('token', '').json('ok');
 });
 
-app.listen(4000, 'localhost', () => {
+app.listen(8080, '0.0.0.0', () => {
   console.log('server started successfully');
 });
