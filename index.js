@@ -14,15 +14,12 @@ const { CreatePostController, GetPostController, GetAllPostsController, EditPost
 
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
-const whitelist = ['http://localhost:3000', 'https://blog-house.netlify.app/'];
+// const whitelist = ['http://localhost:3000', 'https://blog-house.netlify.app/'];
 
 app.use(express.json());
 app.use(cors({
   credentials: true,
-  origin: (origin, callback) => {
-    // Added !origin to allow for NextJS server to hit this server
-    if (!origin || whitelist.includes(origin)) { return callback(null, true); }
-  }
+  origin: '*'
 }));
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
