@@ -43,6 +43,9 @@ const secret = process.env.jwtSecret;
 
 app.get('/profile', (req, res) => {
   const { token } = req.cookies;
+  if (!token) {
+    return res.json({ message: 'user is not logged in' });
+  }
   jwt.verify(token, secret, {}, (err, info) => {
     if (err) throw err;
     res.status(200).json(info);
