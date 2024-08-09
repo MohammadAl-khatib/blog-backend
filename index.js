@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(cors({
   credentials: true,
   origin: (origin, callback) => {
-    console.log('request origin is', origin);
     // Added !origin to allow for NextJS server to hit this server
     if (!origin || whitelist.includes(origin)) { return callback(null, true); }
   }
