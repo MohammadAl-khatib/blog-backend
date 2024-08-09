@@ -14,7 +14,7 @@ const { CreatePostController, GetPostController, GetAllPostsController, EditPost
 
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
-const whitelist = ['http://localhost:3000', process.env.backend];
+const whitelist = ['http://localhost:3000'];
 
 app.use(express.json());
 app.use(cors({
@@ -53,6 +53,7 @@ app.post('/logout', (req, res) => {
   res.cookie('token', '').json('ok');
 });
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log('server started successfully');
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Listening to port ${PORT}`);
 });
