@@ -14,7 +14,7 @@ const { CreatePostController, GetPostController, GetAllPostsController, EditPost
 
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const app = express();
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', process.env.backend];
 
 app.use(express.json());
 app.use(cors({
