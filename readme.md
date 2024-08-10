@@ -10,7 +10,7 @@
 5. Run `node index.js`, port is set to 4000.
 
 
-**Project Design Pattern**
+**Project architecture**
 
 This app represents the model and controller side of an MVC project, the view is a [NextJS app](https://github.com/MohammadAl-khatib/blog-frontend) that handles the user interface. Data flows from a MongoDB in the cloud through this app to the front end for rendering.
 
@@ -20,6 +20,10 @@ Choosing MVC design pattern would help us:
 3. Work can be split between teams.
 
 *Note*: Didn't choose a monorepo as it becomes very large with time, the frontend part is large, so it has its own repo.
+
+**Design Patterns**
+
+Used middlewares to handle files in requests, check `/edit/:id` and `/post` endpoints in `index.js`
 
 **CI/CD**
 
