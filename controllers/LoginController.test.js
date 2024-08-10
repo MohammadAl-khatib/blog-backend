@@ -70,7 +70,7 @@ describe('loginController', () => {
 
     await loginController(req, res);
 
-    expect(res.cookie).toHaveBeenCalledWith('token', mockToken);
+    expect(res.cookie).toHaveBeenCalledWith('token', mockToken, { sameSite: 'None', secure: true });
     expect(res.json).toHaveBeenCalledWith({ id: 'mock userId', username: 'mock user' });
   });
 
